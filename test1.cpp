@@ -16,48 +16,18 @@
 
 using namespace std;
 
-int DO(int a, int b, int ans)
-{
-    if (a % 3 != 0)
-    {
-        int tmp = a % 3;
-        a += 3 - tmp;
-        b -= 3 - tmp;
-    }
-    ans += a / 3;
-    if (b > 0)
-    {
-        ans += b / 3;
-        b -= (b / 3) * 3;
-        if (b == 0)
-            return ans;
-        if (b < 3)
-            return ans + 1;
-        if (b != 0)
-            return ans + 1;
-        return ans;
-    }
-    else if (b == 0)
-        return ans;
-    else
-        return -1;
-}
-
 void solve()
 {
-    int a, b, c;
-    cin >> a >> b >> c;
-    int ans = 0;
-    ans += a;
-    if (DO(b, c, ans) == -1)
+    int a[3];
+    FOR(i, 3)
+    cin >> a[i];
+    sort(a, a + 3);
+    int sum = 0;
+    FOR(i, 2)
     {
-        cout << -1 << endl;
-        return;
+        sum += abs(a[i + 1] - a[i]);
     }
-    else
-    {
-        cout << DO(b, c, ans) << endl;
-    }
+    cout << sum << endl;
 }
 int main()
 {
