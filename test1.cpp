@@ -16,18 +16,28 @@
 
 using namespace std;
 
+unordered_map<int, int> mp;
+
+int Do(int n)
+{
+    if (n == 1)
+        return 0;
+    if (mp.find(n) != mp.end())
+        return mp[n];
+    int step;
+    if (n % 2 == 0)
+        step = 1 + Do(n / 2);
+    else
+        step = 1 + Do(n * 3 + 1);
+    mp[n] = step;
+    return step;
+}
+
 void solve()
 {
-    int a[3];
-    FOR(i, 3)
-    cin >> a[i];
-    sort(a, a + 3);
-    int sum = 0;
-    FOR(i, 2)
-    {
-        sum += abs(a[i + 1] - a[i]);
-    }
-    cout << sum << endl;
+    int n;
+    cin >> n;
+    cout << Do(n) << '\n';
 }
 int main()
 {
@@ -35,9 +45,9 @@ int main()
     cin.tie(0);
     cout.tie(0);
 
-    int t;
-    cin >> t;
-    // int t = 1;
+    // int t;
+    // cin >> t;
+    int t = 1;
     while (t--)
     {
         solve();
