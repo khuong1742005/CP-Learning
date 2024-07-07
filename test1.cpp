@@ -16,28 +16,21 @@
 
 using namespace std;
 
-unordered_map<int, int> mp;
-
-int Do(int n)
-{
-    if (n == 1)
-        return 0;
-    if (mp.find(n) != mp.end())
-        return mp[n];
-    int step;
-    if (n % 2 == 0)
-        step = 1 + Do(n / 2);
-    else
-        step = 1 + Do(n * 3 + 1);
-    mp[n] = step;
-    return step;
-}
-
 void solve()
 {
     int n;
     cin >> n;
-    cout << Do(n) << '\n';
+    vi v(n);
+    FOR(i, n)
+    cin >> v[i];
+    FOR(i, n)
+    {
+        auto it = upper_bound(v.begin() + i, v.end(), v[i]);
+        if (it == v.end())
+            cout << -1 << " ";
+        else
+            cout << *it << " ";
+    }
 }
 int main()
 {
