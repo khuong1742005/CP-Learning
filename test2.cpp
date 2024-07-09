@@ -18,9 +18,26 @@
 
 using namespace std;
 
+int Do(int numBottles, int numExchange)
+{
+    int ans = numBottles;
+    queue<int> cur;
+    while (numBottles >= numExchange)
+    {
+        int base = numBottles / numExchange;
+        cur.push(numBottles - base * numExchange);
+        ans += base;
+        numBottles = cur.front() + base;
+        cur.pop();
+    }
+    return ans;
+}
+
 void solve()
 {
-    
+    int numBottles, numExchange;
+    cin >> numBottles >> numExchange;
+    cout << Do(numBottles, numExchange) << endl;
 }
 
 int main()
@@ -29,9 +46,9 @@ int main()
     cin.tie(0);
     cout.tie(0);
 
-    int t;
-    cin >> t;
-    // int t = 1;
+    // int t;
+    // cin >> t;
+    int t = 1;
     while (t--)
     {
         solve();
