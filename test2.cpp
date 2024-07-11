@@ -20,6 +20,78 @@ using namespace std;
 
 void solve()
 {
+    string s;
+    cin >> s;
+    int n = s.size();
+    int start = 0;
+    int end = 0;
+    for (int i = 0; i < n; i++)
+    {
+        if (s[i] == '(')
+            start = i;
+    }
+    for (int i = n - 1; i >= 0; i--)
+    {
+        if (s[i] == ')')
+        {
+            if (s[i - 1] != '(' && s[i - 2] != '(')
+                end = i;
+        }
+    }
+    vector<char> tmp;
+    for (int i = start; i <= end; i++)
+    {
+        if (s[i] != '(' && s[i] != ')')
+            tmp.push_back(s[i]);
+    }
+    reverse(tmp.begin(), tmp.end());
+    int pos = 0;
+    for (int i = start; i <= end; i++)
+    {
+        if (s[i] != '(' && s[i] != ')')
+        {
+            s[i] = tmp[pos];
+            pos++;
+        }
+    }
+    start--;
+    end++;
+    while (start >= 0 and end <= n - 1)
+    {
+        if (s[start] == '(')
+        {
+            while (end <= n - 1)
+            {
+                if (s[end] == ')')
+                {
+                    vector<char> tmp;
+                    for (int i = start; i <= end; i++)
+                    {
+                        if (s[i] != '(' && s[i] != ')')
+                            tmp.push_back(s[i]);
+                    }
+                    reverse(tmp.begin(), tmp.end());
+                    int pos = 0;
+                    for (int i = start; i <= end; i++)
+                    {
+                        if (s[i] != '(' && s[i] != ')')
+                        {
+                            s[i] = tmp[pos];
+                            pos++;
+                        }
+                    }
+                    end++;
+                    break;
+                }
+                end++;
+            }
+        }
+        start--;
+    }
+    for (int i = 0; i < n; i++)
+    {
+        cout << s[i];
+    }
 }
 
 int main()
