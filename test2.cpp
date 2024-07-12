@@ -18,80 +18,63 @@
 
 using namespace std;
 
+void remove(string &s, int index)
+{
+    s.erase(index, 2);
+}
+
+void DO1(string &s, int pos1, int &ans, int &n, int y)
+{
+    while (pos1 < n)
+    {
+        if (s[pos1] == 'b' && s[pos1 + 1] == 'a')
+        {
+            remove(s, pos1);
+            ans += y;
+            pos1 -= 2;
+            n -= 2;
+        }
+        pos1++;
+    }
+}
+
+void DO2(string &s, int pos2, int &ans, int &n, int x)
+{
+    while (pos2 < n)
+    {
+        if (s[pos2] == 'a' && s[pos2 + 1] == 'b')
+        {
+            remove(s, pos2);
+            ans += x;
+            pos2 -= 2;
+            n -= 2;
+        }
+        pos2++;
+    }
+}
+
 void solve()
 {
     string s;
     cin >> s;
     int n = s.size();
-    int start = 0;
-    int end = 0;
-    for (int i = 0; i < n; i++)
+    int x, y;
+    cin >> x;
+    cin >> y;
+    int ans = 0;
+    int pos1 = 0;
+    int pos2 = 0;
+    if (x > y)
     {
-        if (s[i] == '(')
-            start = i;
+        DO2(s, pos2, ans, n, x);
+        DO1(s, pos1, ans, n, y);
     }
-    for (int i = n - 1; i >= 0; i--)
+    else if (x <= y)
     {
-        if (s[i] == ')')
-        {
-            if (s[i - 1] != '(' && s[i - 2] != '(')
-                end = i;
-        }
+        DO1(s, pos1, ans, n, y);
+        DO2(s, pos2, ans, n, x);
     }
-    vector<char> tmp;
-    for (int i = start; i <= end; i++)
-    {
-        if (s[i] != '(' && s[i] != ')')
-            tmp.push_back(s[i]);
-    }
-    reverse(tmp.begin(), tmp.end());
-    int pos = 0;
-    for (int i = start; i <= end; i++)
-    {
-        if (s[i] != '(' && s[i] != ')')
-        {
-            s[i] = tmp[pos];
-            pos++;
-        }
-    }
-    start--;
-    end++;
-    while (start >= 0 and end <= n - 1)
-    {
-        if (s[start] == '(')
-        {
-            while (end <= n - 1)
-            {
-                if (s[end] == ')')
-                {
-                    vector<char> tmp;
-                    for (int i = start; i <= end; i++)
-                    {
-                        if (s[i] != '(' && s[i] != ')')
-                            tmp.push_back(s[i]);
-                    }
-                    reverse(tmp.begin(), tmp.end());
-                    int pos = 0;
-                    for (int i = start; i <= end; i++)
-                    {
-                        if (s[i] != '(' && s[i] != ')')
-                        {
-                            s[i] = tmp[pos];
-                            pos++;
-                        }
-                    }
-                    end++;
-                    break;
-                }
-                end++;
-            }
-        }
-        start--;
-    }
-    for (int i = 0; i < n; i++)
-    {
-        cout << s[i];
-    }
+    cout << ans;
 }
 
 int main()
