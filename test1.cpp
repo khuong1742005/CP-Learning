@@ -16,21 +16,28 @@
 
 using namespace std;
 
+bool bs(int a[], int n, int x, int l, int r)
+{
+    if (l > r)
+        return false;
+    int mid = (l + r) / 2;
+    if (a[mid] == x)
+        return true;
+    if (a[mid] < mid)
+        return bs(a, n, x, mid + 1, r);
+    else
+        return bs(a, n, x, l, mid - 1);
+}
+
 void solve()
 {
     int n;
     cin >> n;
-    vi v(n);
+    int a[n];
     FOR(i, n)
-    cin >> v[i];
-    FOR(i, n)
-    {
-        auto it = upper_bound(v.begin() + i, v.end(), v[i]);
-        if (it == v.end())
-            cout << -1 << " ";
-        else
-            cout << *it << " ";
-    }
+    cin >> a[i];
+    int x;
+    cin >> x;
 }
 int main()
 {
