@@ -18,63 +18,23 @@
 
 using namespace std;
 
-void remove(string &s, int index)
+class Robot
 {
-    s.erase(index, 2);
-}
+private:
+    int pos;
+    int hel;
+    char direc;
 
-void DO1(string &s, int pos1, int &ans, int &n, int y)
-{
-    while (pos1 < n)
-    {
-        if (s[pos1] == 'b' && s[pos1 + 1] == 'a')
-        {
-            remove(s, pos1);
-            ans += y;
-            pos1 -= 2;
-            n -= 2;
-        }
-        pos1++;
-    }
-}
-
-void DO2(string &s, int pos2, int &ans, int &n, int x)
-{
-    while (pos2 < n)
-    {
-        if (s[pos2] == 'a' && s[pos2 + 1] == 'b')
-        {
-            remove(s, pos2);
-            ans += x;
-            pos2 -= 2;
-            n -= 2;
-        }
-        pos2++;
-    }
-}
+public:
+    Robot(int p, int h, char d) : pos(p), hel(h), direc(d) {}
+    int getPos() { return this->pos; }
+    int getHel() { return this->hel; }
+    char getDirec() { return this->direc; }
+};
 
 void solve()
 {
-    string s;
-    cin >> s;
-    int n = s.size();
-    int x, y;
-    cin >> x;
-    cin >> y;
-    int ans = 0;
-    int pos1 = 0;
-    int pos2 = 0;
-    if (x > y)
-    {
-        DO2(s, pos2, ans, n, x);
-        DO1(s, pos1, ans, n, y);
-    }
-    else if (x <= y)
-    {
-        DO1(s, pos1, ans, n, y);
-        DO2(s, pos2, ans, n, x);
-    }
-    cout << ans;
+    int n;
 }
 
 int main()

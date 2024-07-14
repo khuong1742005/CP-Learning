@@ -16,28 +16,75 @@
 
 using namespace std;
 
-bool bs(int a[], int n, int x, int l, int r)
+void DO(vector<int> &positions, vector<int> &healths, string direction)
 {
-    if (l > r)
-        return false;
-    int mid = (l + r) / 2;
-    if (a[mid] == x)
-        return true;
-    if (a[mid] < mid)
-        return bs(a, n, x, mid + 1, r);
-    else
-        return bs(a, n, x, l, mid - 1);
+    int n = positions.size();
+    vector<pair<pair<int, int>, char>> v(n);
+    for (int i = 0; i < n; i++)
+    {
+        v[i] = {{positions[i], healths[i]}, direction[i]};
+    }
+    sort(v.begin(), v.end());
+    bool checkDiff = true;
+    while (checkDiff == true)
+    {
+        for (int i = 0; i < n; i++)
+        {
+            if (v[i].second == 'R' && v[i + 1].second == 'L')
+            {
+                checkDiff = true;
+                int mid = (v[i].first.first + v[i + 1].first.first);
+                int posChange = max(v[i].first.first - mid, v[i + 1].first.first - mid);
+                if (v[i].first.second < v[i + 1].first.second)
+                {
+                    v.erase(v.begin() + i);
+                    n--;
+                    v[i + 1].first.second--;
+                }
+                else if (v[i].first.second == v[i + 1].first.second)
+                {
+                    v.erase(v.begin() + i);
+                    v.erase(v.begin() + i);
+                    n -= 2;
+                }
+                else
+                {
+                    v.erase(v.begin() + (i + 1));
+                    n--;
+                    v[i].first.second--;
+                }
+                for (int j = 0; j < n; j++)
+                {
+                    if (v[i].second == 'L')
+                    {
+                        v[i].first.first -= posChange;
+                    }
+                    else
+                        v[i].first.first += posChange;
+                }
+                break;
+            }
+            else
+                checkDiff = false;
+            // cout << v[i].first.first << " " << v[i].first.second << " " << v[i].second << endl;
+        }
+    }
+    for (int i = 0; i < n; i++)
+        cout << v[i].first.second << " ";
 }
 
 void solve()
 {
     int n;
     cin >> n;
-    int a[n];
+    vi po(n), he(n);
+    string di;
     FOR(i, n)
-    cin >> a[i];
-    int x;
-    cin >> x;
+    cin >> po[i];
+    FOR(i, n)
+    cin >> he[i];
+    cin >> di;
+    DO(po, he, di);
 }
 int main()
 {
