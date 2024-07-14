@@ -26,15 +26,37 @@ private:
     char direc;
 
 public:
-    Robot(int p, int h, char d) : pos(p), hel(h), direc(d) {}
+    Robot();
+    Robot(int pos, int hel, char direc);
     int getPos() { return this->pos; }
     int getHel() { return this->hel; }
     char getDirec() { return this->direc; }
+    void display();
 };
+
+Robot::Robot() {}
+Robot::Robot(int pos, int hel, char direc) : pos(pos), hel(hel), direc(direc) {}
+void Robot::display()
+{
+    cout << "Position: " << this->pos << ", Helth: " << this->hel << ", Direction: " << this->direc << endl;
+}
 
 void solve()
 {
     int n;
+    cin >> n;
+    Robot rb[n];
+    for (int i = 0; i < n; i++)
+    {
+        int x, y;
+        char z;
+        cin >> x >> y >> z;
+        rb[i] = Robot(x, y, z);
+    }
+    for (int i = 0; i < n; i++)
+    {
+        rb[i].display();
+    }
 }
 
 int main()
