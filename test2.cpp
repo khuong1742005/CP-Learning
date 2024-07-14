@@ -18,45 +18,109 @@
 
 using namespace std;
 
-class Robot
+// vector<int>
+void DO(vector<int> &positions, vector<int> &healths, string directions)
 {
-private:
-    int pos;
-    int hel;
-    char direc;
+    int n = positions.size();
+    vector<int> ans;
 
-public:
-    Robot();
-    Robot(int pos, int hel, char direc);
-    int getPos() { return this->pos; }
-    int getHel() { return this->hel; }
-    char getDirec() { return this->direc; }
-    void display();
-};
+    vector<vector<int>> v(n, vector<int>(3));
+    for (int i = 0; i < n; i++)
+    {
+        v[i][0] = positions[i];
+        v[i][1] = healths[i];
+        if (directions[i] == 'R')
+            v[i][2] = 1;
+        else
+            v[i][2] = -1;
+    }
+    sort(v.begin(), v.end());
 
-Robot::Robot() {}
-Robot::Robot(int pos, int hel, char direc) : pos(pos), hel(hel), direc(direc) {}
-void Robot::display()
-{
-    cout << "Position: " << this->pos << ", Helth: " << this->hel << ", Direction: " << this->direc << endl;
+    stack<pair<pair<int, int>, int>> cur;
+    vector<pair<int, int>> pos;
+    for (int i = 0; i < n; i++)
+    {
+        if (v[i][2] == 1)
+            cur.push({{v[i][0], v[i][1]}, v[i][2]});
+        else
+        {
+            if (!cur.empty())
+            {
+                if (v[i][1] < cur.top().first.second)
+                {
+                    cur.top().first.second--;
+                    continue;
+                }
+                else if (v[i][1] > cur.top().first.second)
+                {
+                    while (!cur.empty())
+                    {
+                        if (v[i][1] < cur.top().first.second)
+                        {
+                            cur.top().first.second--;
+                            break;
+                        }
+                        else if (v[i][1] > cur.top().first.second)
+                        {
+                            cur.pop();
+                            v[i][1]--;
+                        }
+                        else if (v[i][1] == cur.top().first.second)
+                        {
+                            cur.pop();
+                            break;
+                        }
+                        if (cur.empty())
+                        {
+                            pos.push_back({v[i][0], v[i][1]});
+                            break;
+                        }
+                    }
+                }
+                else if (v[i][1] == cur.top().first.second)
+                {
+                    cur.pop();
+                    continue;
+                }
+            }
+            else
+            {
+                pos.push_back({v[i][0], v[i][1]});
+                continue;
+            }
+        }
+    }
+    while (!cur.empty())
+    {
+        pos.push_back({cur.top().first.first, cur.top().first.second});
+        cur.pop();
+    }
+    // sort(pos.begin(), pos.end());
+    for (int i = 0; i < pos.size(); i++)
+    {
+        // ans.push_back(pos[i].second);
+        cout << pos[i].first << ' ' << pos[i].second << endl;
+    }
+    // return ans;
 }
 
 void solve()
 {
     int n;
     cin >> n;
-    Robot rb[n];
-    for (int i = 0; i < n; i++)
-    {
-        int x, y;
-        char z;
-        cin >> x >> y >> z;
-        rb[i] = Robot(x, y, z);
-    }
-    for (int i = 0; i < n; i++)
-    {
-        rb[i].display();
-    }
+    vector<int> positions(n), healths(n);
+    string directions;
+    FOR(i, n)
+    cin >> positions[i];
+    FOR(i, n)
+    cin >> healths[i];
+    cin >> directions;
+    // vector<int> v = DO(positions, healths, directions);
+    // for (int i = 0; i < v.size(); i++)
+    // {
+    //     cout << v[i] << ' ';
+    // }
+    DO(positions, healths, directions);
 }
 
 int main()
