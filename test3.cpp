@@ -1,6 +1,8 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+#define int long long
+
 const int maxn = 200005;
 int a[maxn];
 int t[maxn * 4];
@@ -43,7 +45,7 @@ void update(int id, int l, int r, int pos, int val)
     update(id * 2 + 1, mid + 1, r, pos, val);
     t[id] = t[id * 2] + t[id * 2 + 1];
 }
-int main()
+signed main()
 {
     ios::sync_with_stdio(0);
     cin.tie(0);
