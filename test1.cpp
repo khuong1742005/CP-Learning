@@ -18,39 +18,20 @@
 
 using namespace std;
 
-int gt(int n)
-{
-    if (n == 1)
-        return 1;
-    return n * gt(n - 1);
-}
-int Do(vector<int> &nums, int k)
-{
-    int n = nums.size();
-    sort(nums.begin(), nums.end());
-    int ans = gt(n);
-    int cnt = 0;
-    for (int i = 0; i < n; i++)
-    {
-        for (int j = i + 1; j < n; j++)
-        {
-            if (abs(nums[j] - nums[i]) == k)
-                cnt++;
-        }
-    }
-    return ans - cnt;
-}
-
 void solve()
 {
-    int n;
-    cin >> n;
-    vi v(n);
-    FOR(i, n)
-    cin >> v[i];
-    int k;
-    cin >> k;
-    cout << Do(v, k) << endl;
+    int num;
+    cin >> num;
+    vector<int> nums;
+    while (num > 0)
+    {
+        nums.push_back(num % 10);
+        num /= 10;
+    }
+    reverse(nums.begin(), nums.end());
+    cout << min({
+
+    });
 }
 
 int main()
