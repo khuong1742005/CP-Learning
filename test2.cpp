@@ -20,6 +20,9 @@ using namespace std;
 
 void solve()
 {
+    int n;
+    cin >> n;
+    cout << sqrt(n);
 }
 
 int main()
