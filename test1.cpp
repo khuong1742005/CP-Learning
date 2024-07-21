@@ -20,18 +20,6 @@ using namespace std;
 
 void solve()
 {
-    int num;
-    cin >> num;
-    vector<int> nums;
-    while (num > 0)
-    {
-        nums.push_back(num % 10);
-        num /= 10;
-    }
-    reverse(nums.begin(), nums.end());
-    cout << min({
-
-    });
 }
 
 int main()
