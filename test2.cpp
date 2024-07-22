@@ -22,7 +22,20 @@ void solve()
 {
     int n;
     cin >> n;
-    cout << sqrt(n);
+    vector<string> names(n);
+    vector<int> heights(n);
+    FOR(i, n)
+    cin >> names[i];
+    FOR(i, n)
+    cin >> heights[i];
+    vector<pair<int, string>> v;
+    for (int i = 0; i < n; i++)
+    {
+        v.push_back({heights[i], names[i]});
+    }
+    sort(v.begin(), v.end());
+    FOR(i, n)
+    cout << v[i].first << " " << v[i].second << '\n';
 }
 
 int main()
