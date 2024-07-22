@@ -1,79 +1,83 @@
-#include <iostream>
-#include <vector>
-#include <algorithm>
-
+#include <bits/stdc++.h>
+#define ll long long
+#define db double
+#define fl float
+#define FOR(i, n) for (int i = 0; i < (n); i++)
+#define REP(i, a, b) for (int i = (a); i <= (b); i++)
+#define vi vector<int>
+#define vsz v.size()
+#define ssz s.size()
+#define SZ(x) (x).size()
+#define ALL(x) (x).begin(), (x).end()
+#define pb(x) (x).push_back
+#define yes cout << "YES" << endl;
+#define no cout << "NO" << endl;
+#pragma GCC optimize("03")
+#pragma GCC optimize("unroll-loops")
+#pragma GCC target("avx2")
+#define int long long
 using namespace std;
 
-const int N = 1e5 + 5;
-
-int n, q, a[N];
-vector<pair<int, int>> query[3];
-
-void GetInput()
+void solve()
 {
-    cin >> n >> q;
-    for (int i = 1; i <= n; ++i)
-        cin >> a[i];
-    query[1].emplace_back();
-    query[2].emplace_back();
-    for (int i = 1, f; i <= q; ++i)
+    int n, m;
+    cin >> n >> m;
+    vector<vector<int>> nums1(n, vector<int>(2));
+    vector<vector<int>> nums2(m, vector<int>(2));
+    FOR(i, n)
     {
-        cin >> f;
-        query[f].emplace_back();
-        cin >> query[f].back().first >> query[f].back().second;
+        FOR(j, 2)
+        cin >> nums1[i][j];
     }
-}
-
-void CompressWithOrder()
-{
-    vector<pair<int, pair<int, int>>> hub;
-    for (int i = 1; i <= n; ++i)
-        hub.push_back({a[i], {1, i}});
-    for (int i = 1; i < query[1].size(); ++i)
-        hub.push_back({query[1][i].first, {2, 2 * i}}),
-            hub.push_back({query[1][i].second, {2, 2 * i + 1}});
-    for (int i = 1; i < query[2].size(); ++i)
-        hub.push_back({query[2][i].first, {3, 2 * i}}),
-            hub.push_back({query[2][i].second, {3, 2 * i + 1}});
-    sort(hub.begin(), hub.end());
-
-    for (int i = 0, cur = 0; i < hub.size(); ++i)
+    FOR(i, m)
     {
-        cur += i == 0 || hub[i].first != hub[i - 1].first;
-        auto [val, loc] = hub[i];
-        auto [arr, id] = loc;
-        if (arr == 1)
-            a[id] = cur;
-        else if (arr == 3)
+        FOR(j, 2)
+        cin >> nums2[i][j];
+    }
+    vector<vector<int>> v(n + m, vector<int>(2, 0));
+    for (int i = 0; i < n; i++)
+    {
+        int pos = nums1[i][0];
+        v[pos][0] = pos;
+        v[pos][1] = nums1[i][1];
+    }
+    for (int i = 0; i < m; i++)
+    {
+        int pos = nums2[i][0];
+        if (v[pos][1] > 0)
         {
-            if (id % 2 == 0)
-                query[arr - 1][id / 2].first = cur;
-            else
-                query[arr - 1][id / 2].second = cur;
+            cout << "check " << pos << endl;
+            v[pos][1] += nums2[i][1];
         }
         else
         {
-            if (id % 2)
-                query[arr - 1][id / 2].second = cur;
+            v[pos][0] = pos;
+            v[pos][1] = nums2[i][1];
         }
     }
-}
 
-void Log()
-{
-    for (int i = 1; i <= n; ++i)
-        cout << a[i] << ' ';
-    cout << '\n';
-    for (int i = 1; i < query[1].size(); ++i)
-        cout << '<' << query[1][i].first << " - " << query[1][i].second << '>';
-    cout << '\n';
-    for (int i = 1; i < query[2].size(); ++i)
-        cout << '<' << query[2][i].first << " - " << query[2][i].second << '>';
+    FOR(i, v.size())
+    {
+        FOR(j, 2)
+        {
+            cout << v[i][j] << " ";
+        }
+        cout << '\n';
+    }
 }
 
 signed main()
 {
-    GetInput();
-    CompressWithOrder();
-    Log();
+    ios_base::sync_with_stdio(0);
+    cin.tie(0);
+    cout.tie(0);
+
+    // int t; cin >> t;
+    int t = 1;
+    while (t--)
+    {
+        solve();
+    }
+
+    return 0;
 }
