@@ -20,50 +20,26 @@ using namespace std;
 
 void solve()
 {
-    int n, m;
-    cin >> n >> m;
-    vector<vector<int>> nums1(n, vector<int>(2));
-    vector<vector<int>> nums2(m, vector<int>(2));
-    FOR(i, n)
+    int n;
+    cin >> n;
+    string s = to_string(n);
+    sort(s.begin(), s.end());
+    vector<string> p;
+    for (int i = 0; i <= 30; i++)
     {
-        FOR(j, 2)
-        cin >> nums1[i][j];
+        int x = pow(2, i);
+        p.push_back(to_string(x));
     }
-    FOR(i, m)
+    for (int i = 0; i <= 30; i++)
     {
-        FOR(j, 2)
-        cin >> nums2[i][j];
+        sort(p[i].begin(), p[i].end());
     }
-    vector<vector<int>> v(n + m, vector<int>(2, 0));
-    for (int i = 0; i < n; i++)
+    for (int i = 0; i <= 30; i++)
     {
-        int pos = nums1[i][0];
-        v[pos][0] = pos;
-        v[pos][1] = nums1[i][1];
+        if (p[i] == s)
+            yes
     }
-    for (int i = 0; i < m; i++)
-    {
-        int pos = nums2[i][0];
-        if (v[pos][1] > 0)
-        {
-            cout << "check " << pos << endl;
-            v[pos][1] += nums2[i][1];
-        }
-        else
-        {
-            v[pos][0] = pos;
-            v[pos][1] = nums2[i][1];
-        }
-    }
-
-    FOR(i, v.size())
-    {
-        FOR(j, 2)
-        {
-            cout << v[i][j] << " ";
-        }
-        cout << '\n';
-    }
+    no
 }
 
 signed main()
