@@ -22,36 +22,65 @@ void solve()
 {
     int n, m;
     cin >> n >> m;
-    vector<int> nums1(n);
-    vector<int> nums2(m);
+    vector<vector<int>> grid(n, vector<int>(m));
     FOR(i, n)
-    cin >> nums1[i];
-    FOR(i, m)
-    cin >> nums2[i];
-    int ans1 = 0, ans2 = 0;
-    sort(nums1.begin(), nums1.end());
-    sort(nums2.begin(), nums2.end());
-    ans1 = nums1[0];
-    ans2 = nums2[0];
-    vector<int> ans;
-    if (ans1 > ans2)
-        ans.push_back(ans2 * 10 + ans1);
-    else if (ans2 > ans1)
-        ans.push_back(ans1 * 10 + ans2);
-    else
     {
-        ans.push_back(ans1);
+        FOR(j, m)
+        cin >> grid[i][j];
     }
+    vector<int> vR, vC;
     for (int i = 0; i < n; i++)
+    {
+        int cnt = 0;
+        for (int j = 0; j < m; j++)
+        {
+            if (grid[i][j] == 1)
+                cnt++;
+        }
+        if (cnt >= 2)
+            vR.push_back(i);
+    }
+    for (int i = 0; i < m; i++)
+    {
+        int cnt = 0;
+        for (int j = 0; j < n; j++)
+        {
+            if (grid[j][i] == 1)
+                cnt++;
+        }
+        if (cnt >= 2)
+            vC.push_back(i);
+    }
+
+    map<string, bool> mp;
+    for (int i = 0; i < vR.size(); i++)
     {
         for (int j = 0; j < m; j++)
         {
-            if (nums1[i] == nums2[j])
-                ans.push_back(nums1[i]);
+            if (grid[vR[i]][j] == 1)
+            {
+                string s = to_string(vR[i]) + to_string(j);
+                mp.insert(make_pair(s, true));
+            }
         }
     }
-    sort(ans.begin(), ans.end());
-    cout << ans[0];
+    for (int i = 0; i < vC.size(); i++)
+    {
+        for (int j = 0; j < n; j++)
+        {
+            if (grid[j][vC[i]] == 1)
+            {
+                string s = to_string(j) + to_string(vC[i]);
+                if (mp.find(s) == mp.end())
+                    mp.insert(make_pair(s, true));
+                else
+                    continue;
+            }
+        }
+    }
+    cout << mp.size();
+    // for (auto x : vC)
+    //     cout << x << " ";
 }
 
 int main()

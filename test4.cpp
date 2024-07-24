@@ -20,26 +20,13 @@ using namespace std;
 
 void solve()
 {
-    int n;
-    cin >> n;
-    string s = to_string(n);
-    sort(s.begin(), s.end());
-    vector<string> p;
-    for (int i = 0; i <= 30; i++)
-    {
-        int x = pow(2, i);
-        p.push_back(to_string(x));
-    }
-    for (int i = 0; i <= 30; i++)
-    {
-        sort(p[i].begin(), p[i].end());
-    }
-    for (int i = 0; i <= 30; i++)
-    {
-        if (p[i] == s)
-            yes
-    }
-    no
+    map<string, bool> mp;
+    mp.insert(make_pair("khuong", true));
+    if (mp.find("khuong") != mp.end())
+        cout << "check";
+    mp.insert(make_pair("khuong", true));
+    for (auto i : mp)
+        cout << i.first << " " << i.second << endl;
 }
 
 signed main()
