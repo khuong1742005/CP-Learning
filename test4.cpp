@@ -20,13 +20,14 @@ using namespace std;
 
 void solve()
 {
-    map<string, bool> mp;
-    mp.insert(make_pair("khuong", true));
-    if (mp.find("khuong") != mp.end())
-        cout << "check";
-    mp.insert(make_pair("khuong", true));
-    for (auto i : mp)
-        cout << i.first << " " << i.second << endl;
+    int n, m;
+    cin >> n >> m;
+    vector<vector<int>> matrix(n, vector<int>(m));
+    FOR(i, n)
+    {
+        FOR(j, m)
+            cin >> matrix[i][j];
+    }
 }
 
 signed main()
