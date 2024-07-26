@@ -20,14 +20,6 @@ using namespace std;
 
 void solve()
 {
-    int n, m;
-    cin >> n >> m;
-    vector<vector<int>> matrix(n, vector<int>(m));
-    FOR(i, n)
-    {
-        FOR(j, m)
-            cin >> matrix[i][j];
-    }
 }
 
 signed main()
