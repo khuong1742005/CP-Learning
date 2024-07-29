@@ -16,10 +16,37 @@
 #pragma GCC optimize("unroll-loops")
 #pragma GCC target("avx2")
 
+const int N = 1e6;
+
 using namespace std;
 
 void solve()
 {
+    int n, m;
+    cin >> n >> m;
+    vector<int> Person(n, 0), Task(m);
+    FOR(i, m)
+    cin >> Task[i];
+    int freq[N] = {0};
+    FOR(i, m)
+    {
+        freq[Task[i]]++;
+    }
+    int Max = 0;
+    int aim = 0;
+    for (int i = 0; i < m; i++)
+    {
+        if (freq[Task[i]] > Max)
+        {
+            cout << "checked";
+            Max = freq[Task[i]];
+        }
+        //     if (freq[i] != 0)
+        //     {
+        //         Person[i] = freq[i];
+        //     }
+    }
+    cout << Max;
 }
 
 int main()

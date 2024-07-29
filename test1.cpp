@@ -21,50 +21,6 @@ using namespace std;
 
 void solve()
 {
-    vector<int> rowSum(5);
-    vector<int> colSum(5);
-    for (int i = 0; i < rowSum.size(); i++)
-        cin >> rowSum[i];
-    for (int i = 0; i < colSum.size(); i++)
-        cin >> colSum[i];
-    int n = rowSum.size();
-    int m = colSum.size();
-    vector<vector<int>> v(n, vector<int>(m, 0));
-    int posR = 0, posC = 0;
-    int posJ = 0;
-    for (int i = 0; i < m; i++)
-    {
-        if (colSum[posC] < rowSum[posR])
-        {
-            v[0][posJ] = colSum[posC];
-            rowSum[posR] -= colSum[posC];
-            posJ++;
-            posC++;
-        }
-        else
-        {
-            v[0][posJ] = rowSum[posR];
-            posR++;
-            break;
-        }
-    }
-
-    for (int i = 1; i < n; i++)
-    {
-        v[i][posJ] = colSum[posC] - v[i - 1][posJ];
-        v[i][posJ + 1] = rowSum[posR] - v[i][posJ];
-        posC++;
-        posR++;
-        posJ++;
-    }
-    for (int i = 0; i < n; i++)
-    {
-        for (int j = 0; j < m; j++)
-        {
-            cout << v[i][j] << " ";
-        }
-        cout << '\n';
-    }
 }
 
 signed main()
