@@ -18,9 +18,48 @@
 
 #define int long long
 using namespace std;
-
+const int N = 1e9 + 7;
 void solve()
 {
+    int k;
+    cin >> k;
+    string s;
+    cin >> s;
+    int n = s.size();
+    int pos = 0;
+    int cnt = 0;
+    while (k--)
+    {
+        if (pos < n - 1)
+        {
+            char Max = s[pos];
+            int posj = pos;
+            for (int j = pos + 1; j < n; j++)
+            {
+                if (s[j] > Max)
+                {
+                    Max = s[j];
+                    posj = j;
+                }
+            }
+            swap(s[pos], s[posj]);
+            pos++;
+            cnt++;
+        }
+    }
+    if (cnt < k)
+    {
+        int tmp = k - cnt;
+        if (tmp % 2 == 0)
+            cout << s;
+        else
+        {
+            swap(s[n - 1], s[n - 2]);
+            cout << s;
+        }
+    }
+    else
+        cout << s;
 }
 
 signed main()
