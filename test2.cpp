@@ -16,48 +16,53 @@
 #pragma GCC optimize("unroll-loops")
 #pragma GCC target("avx2")
 
-const int N = 1e6;
-
+#define int long long
 using namespace std;
+
+bool ascDistrict(int n)
+{
+    int last = 9;
+    while (n > 0)
+    {
+        int tmp = n % 10;
+        if (tmp > last)
+            return false;
+        last = tmp;
+        n /= 10;
+    }
+    return true;
+}
 
 void solve()
 {
-    int n, m;
-    cin >> n >> m;
-    vector<int> Person(n, 0), Task(m);
-    FOR(i, m)
-    cin >> Task[i];
-    int freq[N] = {0};
-    FOR(i, m)
+    int n;
+    cin >> n;
+    if (ascDistrict(n) == false)
+        cout << "-1" << endl;
+    else
     {
-        freq[Task[i]]++;
-    }
-    int Max = 0;
-    int aim = 0;
-    for (int i = 0; i < m; i++)
-    {
-        if (freq[Task[i]] > Max)
+        int largest = n;
+        while (!ascDistrict(largest))
+            largest--;
+        int cnt = 0;
+        for (int i = 1; i <= largest; i++)
         {
-            cout << "checked";
-            Max = freq[Task[i]];
+            if (ascDistrict(i) == true)
+                cnt++;
         }
-        //     if (freq[i] != 0)
-        //     {
-        //         Person[i] = freq[i];
-        //     }
+        cout << cnt << endl;
     }
-    cout << Max;
 }
 
-int main()
+signed main()
 {
     ios_base::sync_with_stdio(0);
     cin.tie(0);
     cout.tie(0);
 
-    // int t;
-    // cin >> t;
-    int t = 1;
+    int t;
+    cin >> t;
+    // int t = 1;
     while (t--)
     {
         solve();
