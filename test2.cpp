@@ -19,39 +19,8 @@
 #define int long long
 using namespace std;
 
-bool ascDistrict(int n)
-{
-    int last = 9;
-    while (n > 0)
-    {
-        int tmp = n % 10;
-        if (tmp > last)
-            return false;
-        last = tmp;
-        n /= 10;
-    }
-    return true;
-}
-
 void solve()
 {
-    int n;
-    cin >> n;
-    if (ascDistrict(n) == false)
-        cout << "-1" << endl;
-    else
-    {
-        int largest = n;
-        while (!ascDistrict(largest))
-            largest--;
-        int cnt = 0;
-        for (int i = 1; i <= largest; i++)
-        {
-            if (ascDistrict(i) == true)
-                cnt++;
-        }
-        cout << cnt << endl;
-    }
 }
 
 signed main()

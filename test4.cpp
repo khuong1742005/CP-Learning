@@ -18,37 +18,8 @@
 #define int long long
 using namespace std;
 
-struct Diamond
-{
-    double w;
-    double c;
-};
-
-bool compare(const Diamond &a, const Diamond &b)
-{
-    return a.w < b.w;
-}
 void solve()
 {
-    int n;
-    cin >> n;
-    vector<Diamond> diamond(n);
-    FOR(i, n)
-    cin >> diamond[i].w >> diamond[i].c;
-    sort(ALL(diamond), compare);
-    vector<int> dp(n, 1);
-    for (int i = 1; i < n; i++)
-    {
-        for (int j = 0; j < i; j++)
-        {
-            if (diamond[i].c < diamond[j].c)
-            {
-                dp[i] = max(dp[i], dp[j] + 1);
-            }
-        }
-    }
-    int ans = *max_element(ALL(dp));
-    cout << ans << '\n';
 }
 
 signed main()
