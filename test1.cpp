@@ -21,6 +21,34 @@ using namespace std;
 
 void solve()
 {
+    int n, s, m;
+    cin >> n >> s >> m;
+    vector<pair<int, int>> v;
+    FOR(i, n)
+    {
+        int l, r;
+        cin >> l;
+        cin >> r;
+        v.push_back({l, r});
+    }
+    if (v[0].first >= s)
+    {
+        yes return;
+    }
+    if (m - v[n - 1].second >= s)
+    {
+        yes return;
+    }
+    for (int i = 1; i < n; i++)
+    {
+        if (v[i].first - v[i - 1].second >= s)
+        {
+            yes return;
+        }
+    }
+    no
+    // for (auto x : v)
+    //     cout << x.first << " " << x.second << endl;
 }
 
 signed main()
