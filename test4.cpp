@@ -20,50 +20,6 @@ using namespace std;
 
 void solve()
 {
-    string s, x;
-    cin >> s >> x;
-    int posx = 0;
-    int poss = 0;
-    while (posx < x.size() && poss < s.size())
-    {
-        if (s[poss] == x[posx])
-        {
-            poss++;
-            posx++;
-        }
-        else
-        {
-            if (s[poss] != '?')
-                poss++;
-            else
-            {
-                s[poss] = x[posx];
-                poss++;
-                posx++;
-            }
-        }
-    }
-    for (int i = 0; i < s.size(); i++)
-    {
-        if (s[i] == '?')
-            s[i] = 'a';
-    }
-    int pos1 = 0;
-    for (int i = 0; i < s.size(); i++)
-    {
-        if (s[i] == x[pos1])
-        {
-            pos1++;
-            if (pos1 == x.size())
-            {
-                yes
-                        cout
-                    << s << endl;
-                return;
-            }
-        }
-    }
-    no
 }
 
 signed main()
