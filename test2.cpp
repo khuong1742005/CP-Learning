@@ -19,8 +19,30 @@
 #define int long long
 using namespace std;
 
+int check(int n)
+{
+    int sum = 0;
+    while (n > 0)
+    {
+        sum += n % 10;
+        n /= 10;
+    }
+    return sum;
+}
+
 void solve()
 {
+    int n;
+    cin >> n;
+    for (int i = 1; i < 1000; i++)
+    {
+        int aim = i * n;
+        if (check(aim) % n == 0)
+        {
+            cout << aim << endl;
+            return;
+        }
+    }
 }
 
 signed main()
@@ -29,9 +51,9 @@ signed main()
     cin.tie(0);
     cout.tie(0);
 
-    int t;
-    cin >> t;
-    // int t = 1;
+    // int t;
+    // cin >> t;
+    int t = 1;
     while (t--)
     {
         solve();

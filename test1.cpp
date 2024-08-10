@@ -19,8 +19,44 @@
 #define int long long
 using namespace std;
 
+bool DO(string &s, int k)
+{
+    int n = s.size();
+    REP(i, 1, n / (k + 1))
+    {
+        string pref = s.substr(0, i);
+        string suff = s.substr(n - i);
+        string mid = s.substr(i, n - 2 * i);
+        if (mid.size() < i * k)
+            continue;
+        string rever = pref;
+        reverse(ALL(rever));
+        bool check = true;
+        FOR(j, k)
+        {
+            string seg = mid.substr(j * i, i);
+            if (seg != rever)
+            {
+                check = false;
+                break;
+            }
+        }
+        if (check & mid.substr(k * i) == suff)
+            return true;
+    }
+    return false;
+}
+
 void solve()
 {
+    int n;
+    cin >> n;
+    int k;
+    cin >> k;
+    string s;
+    cin >> s;
+    if (DO(s, k))
+        yes else no
 }
 
 signed main()
