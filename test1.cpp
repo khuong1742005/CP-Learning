@@ -19,44 +19,27 @@
 #define int long long
 using namespace std;
 
-bool DO(string &s, int k)
-{
-    int n = s.size();
-    REP(i, 1, n / (k + 1))
-    {
-        string pref = s.substr(0, i);
-        string suff = s.substr(n - i);
-        string mid = s.substr(i, n - 2 * i);
-        if (mid.size() < i * k)
-            continue;
-        string rever = pref;
-        reverse(ALL(rever));
-        bool check = true;
-        FOR(j, k)
-        {
-            string seg = mid.substr(j * i, i);
-            if (seg != rever)
-            {
-                check = false;
-                break;
-            }
-        }
-        if (check & mid.substr(k * i) == suff)
-            return true;
-    }
-    return false;
-}
-
 void solve()
 {
-    int n;
-    cin >> n;
-    int k;
-    cin >> k;
-    string s;
-    cin >> s;
-    if (DO(s, k))
-        yes else no
+    string name, typed;
+    cin >> name >> typed;
+    int pos1 = 0, pos2 = 0;
+    while (pos1 < name.length() && pos2 < typed.length())
+    {
+        if (name[pos1] != typed[pos2])
+        {
+            pos2++;
+        }
+        else
+        {
+            pos1++;
+            pos2++;
+        }
+    }
+    if (pos1 != name.length())
+        no else yes
+                cout
+            << pos1 << " " << pos2;
 }
 
 signed main()
@@ -65,9 +48,9 @@ signed main()
     cin.tie(0);
     cout.tie(0);
 
-    int t;
-    cin >> t;
-    // int t = 1;
+    // int t;
+    // cin >> t;
+    int t = 1;
     while (t--)
     {
         solve();
