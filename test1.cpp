@@ -21,25 +21,39 @@ using namespace std;
 
 void solve()
 {
-    string name, typed;
-    cin >> name >> typed;
-    int pos1 = 0, pos2 = 0;
-    while (pos1 < name.length() && pos2 < typed.length())
+    string s;
+    cin >> s;
+    int n = s.length();
+    int pos1 = 0;
+    int pos2 = 0;
+    string ans = "";
+    stack<char> t;
+    while (true)
     {
-        if (name[pos1] != typed[pos2])
+        char c = 'z';
+        for (int i = pos1; i < n; i++)
         {
-            pos2++;
+            if (s[i] < c)
+            {
+                c = s[i];
+                pos2 = i;
+            }
         }
-        else
+        for (int i = pos1; i < pos2; i++)
         {
-            pos1++;
-            pos2++;
+            t.push(s[i]);
         }
+        ans += c;
+        pos1 = pos2 + 1;
+        if (pos2 == n - 1)
+            break;
     }
-    if (pos1 != name.length())
-        no else yes
-                cout
-            << pos1 << " " << pos2;
+    // while (!t.empty())
+    // {
+    //     ans += t.top();
+    //     t.pop();
+    // }
+    cout << ans << "\n";
 }
 
 signed main()
