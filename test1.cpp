@@ -9,7 +9,6 @@
 #define ssz s.size()
 #define SZ(x) (x).size()
 #define ALL(x) (x).begin(), (x).end()
-#define pb(x) (x).push_back
 #define yes cout << "YES" << endl;
 #define no cout << "NO" << endl;
 #pragma GCC optimize("03")
@@ -21,39 +20,64 @@ using namespace std;
 
 void solve()
 {
-    string s;
-    cin >> s;
-    int n = s.length();
-    int pos1 = 0;
-    int pos2 = 0;
-    string ans = "";
-    stack<char> t;
-    while (true)
+    vector<int> stones;
+    int n;
+    cin >> n;
+    for (int i = 0; i < n; i++)
     {
-        char c = 'z';
-        for (int i = pos1; i < n; i++)
+        int x;
+        cin >> x;
+        stones.push_back(x);
+    }
+    sort(stones.begin(), stones.end());
+    int pos = 0;
+    vector<int> st;
+    int sum = 0;
+    while (pos < n)
+    {
+        sum += stones[pos];
+        if (sum % 3 == 0)
         {
-            if (s[i] < c)
+            st.push_back(stones[pos]);
+            sum -= stones[pos];
+        }
+        pos++;
+    }
+    if (st.size() == 0)
+    {
+        yes
+    }
+    else
+    {
+        int sz = st.size();
+        for (int i = 0; i < st.size(); i++)
+        {
+            sum += st[i];
+            if (sum % 3 != 0)
             {
-                c = s[i];
-                pos2 = i;
+                sz--;
+            }
+            else
+            {
+                sum -= st[i];
             }
         }
-        for (int i = pos1; i < pos2; i++)
+        if (sz == 0)
+            no else if (sz == st.size())
+            {
+                int tmp = n - st.size();
+                if (tmp % 2 == 0)
+                    no else yes
+            }
+        else
         {
-            t.push(s[i]);
+            int tmp = st.size() - sz;
+            if (tmp % 2 == 0)
+                yes else no
         }
-        ans += c;
-        pos1 = pos2 + 1;
-        if (pos2 == n - 1)
-            break;
     }
-    // while (!t.empty())
-    // {
-    //     ans += t.top();
-    //     t.pop();
-    // }
-    cout << ans << "\n";
+    for (auto x : st)
+        cout << x << " ";
 }
 
 signed main()

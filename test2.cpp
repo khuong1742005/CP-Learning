@@ -19,30 +19,12 @@
 #define int long long
 using namespace std;
 
-int check(int n)
-{
-    int sum = 0;
-    while (n > 0)
-    {
-        sum += n % 10;
-        n /= 10;
-    }
-    return sum;
-}
-
 void solve()
 {
     int n;
     cin >> n;
-    for (int i = 1; i < 1000; i++)
-    {
-        int aim = i * n;
-        if (check(aim) % n == 0)
-        {
-            cout << aim << endl;
-            return;
-        }
-    }
+    if (n % 3 == 0)
+        yes
 }
 
 signed main()
