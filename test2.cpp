@@ -21,10 +21,7 @@ using namespace std;
 
 void solve()
 {
-    int n;
-    cin >> n;
-    if (n % 3 == 0)
-        yes
+    
 }
 
 signed main()
