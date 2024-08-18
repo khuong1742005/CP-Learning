@@ -16,68 +16,55 @@
 #pragma GCC target("avx2")
 
 #define int long long
+#define ii pair<int, int>
+const int N = 1e5 + 5;
+const int INF = 2e18 + 5;
 using namespace std;
+
+vector<ii> adj[N];
+int dis[N];
+vector<vector<int>> triangle;
+
+void getInput()
+{
+    // int side = 0;
+    // for (int i = 1; i < triangle.size(); i++)
+    // {
+    //     side += i * 2;
+    // }
+    for (int i = 0; i < triangle.size() - 1; i++)
+    {
+        for (int j = 0; j < triangle[i].size(); j++)
+        {
+            int u = triangle[i][j];
+            int v1 = triangle[i + 1][j];
+            int v2 = triangle[i + 1][j + 1];
+            adj[u].push_back({v1, abs(u - v1)});
+            adj[u].push_back({v2, abs(u - v2)});
+        }
+    }
+}
+
+void Dijkstra(int root)
+{
+    priority_queue<ii, vector<ii>, greater<ii>> pque;
+    fill(dis, dis + N, INF);
+    dis[root] = 0;
+    pque.push({0, root});
+    while (pque.size())
+    {
+        auto [len, node] = pque.top();
+        pque.pop();
+        for (auto [child, weight] : adj[node])
+            if (len + weight < dis[child])
+                dis[child] = len + weight,
+                pque.push({dis[child], child});
+    }
+}
 
 void solve()
 {
-    vector<int> stones;
-    int n;
-    cin >> n;
-    for (int i = 0; i < n; i++)
-    {
-        int x;
-        cin >> x;
-        stones.push_back(x);
-    }
-    sort(stones.begin(), stones.end());
-    int pos = 0;
-    vector<int> st;
-    int sum = 0;
-    while (pos < n)
-    {
-        sum += stones[pos];
-        if (sum % 3 == 0)
-        {
-            st.push_back(stones[pos]);
-            sum -= stones[pos];
-        }
-        pos++;
-    }
-    if (st.size() == 0)
-    {
-        yes
-    }
-    else
-    {
-        int sz = st.size();
-        for (int i = 0; i < st.size(); i++)
-        {
-            sum += st[i];
-            if (sum % 3 != 0)
-            {
-                sz--;
-            }
-            else
-            {
-                sum -= st[i];
-            }
-        }
-        if (sz == 0)
-            no else if (sz == st.size())
-            {
-                int tmp = n - st.size();
-                if (tmp % 2 == 0)
-                    no else yes
-            }
-        else
-        {
-            int tmp = st.size() - sz;
-            if (tmp % 2 == 0)
-                yes else no
-        }
-    }
-    for (auto x : st)
-        cout << x << " ";
+    Dijkstra(triangle[0][0]);
 }
 
 signed main()
@@ -91,6 +78,7 @@ signed main()
     int t = 1;
     while (t--)
     {
+        getInput();
         solve();
     }
 
