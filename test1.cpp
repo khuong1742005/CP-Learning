@@ -21,50 +21,50 @@ const int N = 1e5 + 5;
 const int INF = 2e18 + 5;
 using namespace std;
 
+int n, m;
 vector<ii> adj[N];
+vector<int> ans;
 int dis[N];
-vector<vector<int>> triangle;
 
-void getInput()
+void GetInput()
 {
-    // int side = 0;
-    // for (int i = 1; i < triangle.size(); i++)
-    // {
-    //     side += i * 2;
-    // }
-    for (int i = 0; i < triangle.size() - 1; i++)
+    cin >> n >> m;
+    int u, v, w;
+    for (int i = 1; i <= m; i++)
     {
-        for (int j = 0; j < triangle[i].size(); j++)
-        {
-            int u = triangle[i][j];
-            int v1 = triangle[i + 1][j];
-            int v2 = triangle[i + 1][j + 1];
-            adj[u].push_back({v1, abs(u - v1)});
-            adj[u].push_back({v2, abs(u - v2)});
-        }
+        cin >> u >> v >> w;
+        adj[u].push_back({v, w});
+        adj[v].push_back({u, w});
     }
 }
-
-void Dijkstra(int root)
+void DJK(int root)
 {
     priority_queue<ii, vector<ii>, greater<ii>> pque;
     fill(dis, dis + N, INF);
     dis[root] = 0;
     pque.push({0, root});
-    while (pque.size())
+    while (!pque.empty())
     {
         auto [len, node] = pque.top();
         pque.pop();
         for (auto [child, weight] : adj[node])
+        {
             if (len + weight < dis[child])
-                dis[child] = len + weight,
+            {
+                dis[child] = len + weight;
                 pque.push({dis[child], child});
+            }
+        }
     }
 }
-
 void solve()
 {
-    Dijkstra(triangle[0][0]);
+    DJK(1);
+    for (int node : ans)
+    {
+        cout << node << ' ';
+    }
+    cout << '\n';
 }
 
 signed main()
@@ -78,7 +78,7 @@ signed main()
     int t = 1;
     while (t--)
     {
-        getInput();
+        GetInput();
         solve();
     }
 

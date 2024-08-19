@@ -19,9 +19,47 @@
 #define int long long
 using namespace std;
 
+bool check(int n)
+{
+    if (n < 2)
+        return false;
+    for (int i = 2; i * i <= n; i++)
+    {
+        if (n % i == 0)
+            return false;
+    }
+    return true;
+}
+
 void solve()
 {
-    
+    int n;
+    cin >> n;
+    int dp[1001] = {0};
+    dp[2] = 2;
+    dp[3] = 3;
+    for (int i = 4; i <= 1000; i++)
+    {
+        if (i % 2 == 0)
+            dp[i] = dp[i / 2] + 2;
+        else
+        {
+            if (check(i))
+                dp[i] = i;
+            else
+            {
+                for (int j = i - 1; j > 1; j--)
+                {
+                    if (i % j == 0)
+                    {
+                        dp[i] = dp[j] + i / j;
+                        break;
+                    }
+                }
+            }
+        }
+    }
+    cout << dp[n] << "\n";
 }
 
 signed main()
