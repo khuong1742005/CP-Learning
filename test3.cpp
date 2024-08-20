@@ -19,74 +19,193 @@
 #define ll long long
 using namespace std;
 
-int A[200005];
-ll ST[840008];
-const int op = 1e9 + 10;
-int n, q;
-
-int check(int n)
+void EqualRow(string s1, string s2)
 {
-    int k = 0;
-    while (n != 0)
+    if (s1[0] > s2[0])
     {
-        n = n / 3;
-        k++;
+        int tmp = (s1[0] - 'A') - (s2[0] - 'A');
+        cout << tmp << endl;
+        while (tmp--)
+            cout << 'L' << '\n';
     }
-    return k;
+    else
+    {
+        int tmp = (s2[0] - 'A') - (s1[0] - 'A');
+        cout << tmp << endl;
+        while (tmp--)
+            cout << 'R' << '\n';
+    }
+}
+void EqualCol(string s1, string s2)
+{
+    if (s1[1] > s2[1])
+    {
+        int tmp = (s1[1] - '0') - (s2[1] - '0');
+        cout << tmp << endl;
+        while (tmp--)
+            cout << 'D' << '\n';
+    }
+    else
+    {
+        int tmp = (s2[1] - '0') - (s1[1] - '0');
+        cout << tmp << endl;
+        while (tmp--)
+            cout << 'U' << '\n';
+    }
 }
 
-void update(int id, int l, int r, int i, int v)
+void solve()
 {
-    if (i < l || r < i)
+    string s1, s2;
+    cin >> s1 >> s2;
+    if (s1 == s2)
+        cout << 0;
+    else if (s1[0] == s2[0])
     {
-
-        return;
+        EqualCol(s1, s2);
     }
-    if (l == r)
+    else if (s1[1] == s2[1])
     {
-
-        ST[id] = v;
-        return;
+        EqualRow(s1, s2);
     }
-
-    int mid = (l + r) / 2;
-    update(id * 2, l, mid, i, v);
-    update(id * 2 + 1, mid + 1, r, i, v);
-
-    ST[id] = ST[id * 2] + ST[id * 2 + 1];
+    else
+    {
+        int c1 = s1[0] - 'a', c2 = s2[0] - 'a';
+        int r1 = s1[1] - '0', r2 = s2[1] - '0';
+        // row > col >
+        if (s1[0] > s2[0] && s1[1] > s2[1])
+        {
+            if (c1 - c2 < r1 - r2)
+            {
+                cout << r1 - r2 << '\n';
+                while (c1 != c2)
+                {
+                    cout << "LD" << '\n';
+                    c1--;
+                    r1--;
+                }
+                while (r1 != r2)
+                    cout << 'D' << '\n',
+                        r1--;
+            }
+            else
+            {
+                cout << c1 - c2 << '\n';
+                while (r1 != r2)
+                {
+                    cout << "LD" << '\n';
+                    r1--;
+                    c1--;
+                }
+                while (c1 != c2)
+                    cout << 'L' << '\n',
+                        c1--;
+            }
+        }
+        // row > col <
+        else if (s1[0] < s2[0] && s1[1] > s2[1])
+        {
+            if (c2 - c1 < r1 - r2)
+            {
+                cout << r1 - r2 << '\n';
+                while (c1 != c2)
+                {
+                    cout << "RD" << '\n';
+                    c1++;
+                    r1--;
+                }
+                while (r1 != r2)
+                    cout << 'D' << '\n',
+                        r1--;
+            }
+            else
+            {
+                cout << c2 - c1 << '\n';
+                while (r1 != r2)
+                {
+                    cout << "RD" << '\n';
+                    r1--;
+                    c1++;
+                }
+                while (c1 != c2)
+                    cout << 'R' << '\n',
+                        c1++;
+            }
+        }
+        // row < col <
+        else if (s1[0] < s2[0] && s1[1] < s2[1])
+        {
+            if (c2 - c1 < r2 - r1)
+            {
+                cout << r2 - r1 << '\n';
+                while (c1 != c2)
+                {
+                    cout << "RU" << '\n';
+                    c1++;
+                    r1++;
+                }
+                while (r1 != r2)
+                    cout << 'U' << '\n',
+                        r1++;
+            }
+            else
+            {
+                cout << c2 - c1 << '\n';
+                while (r1 != r2)
+                {
+                    cout << "RU" << '\n';
+                    r1++;
+                    c1++;
+                }
+                while (c1 != c2)
+                    cout << 'R' << '\n',
+                        c1++;
+            }
+        }
+        // row < col >
+        else if (s1[0] > s2[0] && s1[1] < s2[1])
+        {
+            if (c1 - c2 < r2 - r1)
+            {
+                cout << r2 - r1 << '\n';
+                while (c1 != c2)
+                {
+                    cout << "LU" << '\n';
+                    c1--;
+                    r1++;
+                }
+                while (r1 != r2)
+                    cout << 'U' << '\n',
+                        r1++;
+            }
+            else
+            {
+                cout << c1 - c2 << '\n';
+                while (r1 != r2)
+                {
+                    cout << "LU" << '\n';
+                    r1++;
+                    c1--;
+                }
+                while (c1 != c2)
+                    cout << 'L' << '\n',
+                        c1--;
+            }
+        }
+    }
 }
-
-ll get(int id, int l, int r, int u, int v)
-{
-    if (v < l || r < u)
-    {
-
-        return 0;
-    }
-    if (u <= l && r <= v)
-    {
-
-        return ST[id];
-    }
-    int mid = (l + r) / 2;
-
-    return get(id * 2, l, mid, u, v) + get(id * 2 + 1, mid + 1, r, u, v);
-}
-
 signed main()
 {
     ios_base::sync_with_stdio(0);
     cin.tie(0);
     cout.tie(0);
 
-    int t;
-    cin >> t;
-    // int t = 1;
+    // int t;
+    // cin >> t;
+    int t = 1;
     while (t--)
     {
-        int l, r;
-        cin >> l >> r;
-        cout << get(1, 1, 200000, l + 1, r) + check(l) * 2 << endl;
+        solve();
     }
 
     return 0;

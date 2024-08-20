@@ -20,6 +20,9 @@ using namespace std;
 
 void solve()
 {
+    int n, m;
+    cin >> n >> m;
+    int ans = 0;
 }
 
 signed main()
